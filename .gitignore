@@ -1,0 +1,10 @@
+{VENV_NAME}/
+__pycache__/
+*.pyc
+*/migrations/*
+db.sqlite3
+.env
+_archive/
+_notes/
+_notes.txt
+staticfiles/
