@@ -69,20 +69,22 @@ memory usage: 378.1+ MB
 - total quantity_sold and net_sales for each menu_item per location per day for 2023
 
 ### visualizations:
-- Total net sales
-- Total net sales per category
-- Total net sales per location
-- Top 25 menu items org-wide by total net sales (data table)
-- Top 5 menu items per region by total net sales (bar chart)
-- Top 5 sales weeks per location by total net sales (heatmap)
-- Total net sales by category (bar chart)
+- Total net sales org-wide (a single metric at the top)
+- 4 charts in a grid layout:
+    - Total net sales per category
+    - Total net sales per region
+    - Total net sales per location
+    - Top 25 menu items org-wide by total net sales (data table)
+- Each chart should be able to be clicked / highlighted, and when clicked, the underlying data table at the bottom should filter to show only the data that corresponds to the clicked chart
 
 ### slicers:
-- region
-- location
-- date range (start and end date)
-- menu category
-- menu item
+- slicers for:
+    - region
+    - location
+    - date range (start and end date)
+    - menu category
+    - menu item
+- if no slicers are selected, the dashboard will show the full data
 
 ## setup
 
