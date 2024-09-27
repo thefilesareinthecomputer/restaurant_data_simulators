@@ -24,7 +24,7 @@ Current features include:
 ## data
 
 ### sample of source csv data before conversion to parquet:
-```
+```bash
 region,location,date,category,menu_item,quantity_sold,net_sales
 Southeast,Atlanta,2023-01-01,starters,Charcuterie Board,2,44
 Southeast,Atlanta,2023-01-01,starters,Charcuterie Board,1,22
@@ -39,7 +39,7 @@ Southeast,Atlanta,2023-01-01,starters,Baked Brie,2,28
 ```
 
 ### dataframe info:
-```
+```bash
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 7079822 entries, 0 to 7079821
 Data columns (total 7 columns):
@@ -99,4 +99,38 @@ cd restaurant_data_simulators
 python3.11 -m venv {VENV_NAME}
 
 source {VENV_NAME}/bin/activate
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Set up environment variables
+- Create a .env file in the root of your project and define the following:
+```bash
+STAGING_DATA_DIRECTORY=/path/to/staging/data
+APP_DATA_DIRECTORY=/path/to/app/data
+```
+
+### 5. Run the data pipeline (optional)
+- If you want to edit the menu or locations lists, you can do so in the `data_pipeline/restaurant_details.py` file
+- Then, to generate new synthetic data, run the following:
+```bash
+python data_pipeline/sales_data_creator.py
+```
+- This creates a CSV file in the `STAGING_DATA_DIRECTORY` defined in your .env file
+```bash
+python data_pipeline/sales_data_pipeline.py
+```
+- This converts the CSV file to a parquet file and saves it in the `APP_DATA_DIRECTORY` defined in your .env file
+
+### 6. Run the app
+```bash
+python dash_app/app.py
+```
+
+### 7. Open the Dashboard
+```bash
+Visit http://127.0.0.1:8050/ in your browser.
 ```
