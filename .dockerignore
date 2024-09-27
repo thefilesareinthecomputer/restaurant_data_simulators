@@ -1,0 +1,15 @@
+restaurant_data_simulators_venv/
+_archive/
+_notes/
+_notes.txt
+generated_data/
+venv/
+__pycache__/
+*.pyc
+*/migrations/*
+db.sqlite3
+.env
+staticfiles/
+.git
+.gitignore
+node_modules/

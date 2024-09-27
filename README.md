@@ -86,7 +86,7 @@ memory usage: 378.1+ MB
     - menu item
 - if no slicers are selected, the dashboard will show the full data
 
-## setup
+## local setup
 
 ### Prerequisites:
 - Python 3.11+

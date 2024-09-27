@@ -1,11 +1,10 @@
 import os
 import pandas as pd
-from dotenv import load_dotenv
 
-# grab environment variables
-load_dotenv()
-STAGING_DATA_DIRECTORY = os.getenv('STAGING_DATA_DIRECTORY')
-APP_DATA_DIRECTORY = os.getenv('APP_DATA_DIRECTORY')
+current_directory = os.path.dirname(__file__)
+project_directory = os.path.join(current_directory, os.pardir)
+STAGING_DATA_DIRECTORY = os.path.join(project_directory, 'data_pipeline', 'generated_data')
+APP_DATA_DIRECTORY = os.path.join(project_directory, 'dash_app', 'data')
 
 # list all available files in the staging directory
 csv_files = [f for f in os.listdir(STAGING_DATA_DIRECTORY) if f.endswith('.csv')]
