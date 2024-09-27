@@ -10,17 +10,26 @@ Current features include:
 - Visualizing sales data in an interactive Dash web app
 
 
-## Technologies Used
+### Technologies Used
 - Python - version 3.11.4
 - Pandas
 - Plotly
 - Pyarrow
 - Dash
 
-## Features
+### Features (Current)
 - Interactive dashboard for visualizing sales data
+- Data pipeline for generating synthetic sales data
+- Data pipeline for converting CSV data to Parquet format
+- Dockerfile for containerizing the app
 
-## data
+### Feature additions (Roadmap)
+- Each chart should be able to be clicked / highlighted, and when clicked, the underlying data table at the bottom should filter to show only the data that corresponds to the clicked chart
+
+### Dashboard Image
+![Dashboard Image](/dash_app/assets/dashboard_screenshot.png)
+
+## source data overview:
 
 ### sample of source csv data before conversion to parquet:
 ```bash
@@ -70,11 +79,10 @@ memory usage: 378.1+ MB
 ### visualizations:
 - Total net sales org-wide (a single metric at the top)
 - 4 charts in a grid layout:
-    - Total net sales per category
     - Total net sales per region
     - Total net sales per location
+    - Total net sales per category
     - Top 25 menu items org-wide by total net sales (data table)
-- Each chart should be able to be clicked / highlighted, and when clicked, the underlying data table at the bottom should filter to show only the data that corresponds to the clicked chart
 
 ### slicers:
 - slicers for:
