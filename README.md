@@ -1,8 +1,20 @@
 # Restaurant Data Simulators
 
 ## Project Description
-```
-This project is a collection of data simulators for a theoretical restaurant chain. 
-The data simulators are used to generate data for a restaurant's menu, inventory, and sales. 
-The data simulators are designed to be used in conjunction with a restaurant management system to generate data for testing and development purposes.
-```
+This is a development project for a restaurant KPI dashboard.
+Current features include:
+- Generating simulated sales data for analytics pipeline development based on: 
+    - pre-programmed menu and location lists 
+    - regional and seasonal trends
+    - day-of-week fluctuations
+- Visualizing sales data in an interactive dashboard
+
+
+## Technologies Used
+- Python - version 3.11.4
+- Pandas
+- Plotly
+- Dash
+
+## Features
+- Interactive dashboard for visualizing sales data
