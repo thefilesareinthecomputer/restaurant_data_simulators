@@ -10,7 +10,7 @@ pd.set_option('display.max_columns', None)
 
 # Load the sales_dataset_2023.csv file into a dataframe
 current_directory = os.path.dirname(__file__)
-df = pd.read_csv(f"{current_directory}/generated_data/sales_data_per_location_2024-09-26_14-59-25.csv")
+df = pd.read_csv(f"{current_directory}/generated_data/sales_data_per_location_2024-09-26_16-50-15.csv")
 # print the file size of the csv file
 print("\n--- File Size of CSV ---\n")
 print(f"File Size: {os.path.getsize(f'{current_directory}/generated_data/sales_data_per_location_2024-09-26_14-59-25.csv')} bytes")
