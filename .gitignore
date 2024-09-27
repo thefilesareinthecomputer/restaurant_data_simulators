@@ -6,6 +6,7 @@ generated_data/
 venv/
 __pycache__/
 *.pyc
+.DS_Store
 */migrations/*
 db.sqlite3
 .env
