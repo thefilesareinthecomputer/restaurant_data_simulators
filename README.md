@@ -20,7 +20,7 @@ Current features include:
 ### Features (Current)
 - Interactive dashboard for visualizing sales data
 - Data pipeline for generating synthetic sales data
-- Data pipeline for converting CSV data to Parquet format
+- Data pipeline for converting CSV data to Parquet format using brotli compression for storage efficiency
 - Dockerfile for containerizing the app
 
 ### Feature additions (Roadmap)
