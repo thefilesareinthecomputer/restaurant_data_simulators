@@ -6,23 +6,23 @@ from dash.dependencies import Input, Output, State
 import plotly.express as px
 import dash_bootstrap_components as dbc
 
-# Initialize the Dash app with a Bootstrap theme
+# initialize dash app with bootstrap theme
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# Load the Parquet file into a pandas DataFrame
+# load parquet file into pandas dataframe
 parquet_file_path = os.path.join(os.path.dirname(__file__), 'data', 'sales_data.parquet')
 df = pd.read_parquet(parquet_file_path)
 
-# Ensure date column is in datetime format
+# make sure dates are datetime ojbects
 df['date'] = pd.to_datetime(df['date'])
 
-# Precompute data for performance
+# pre-compute data for performance
 total_net_sales = df['net_sales'].sum()
 net_sales_by_category = df.groupby('category')['net_sales'].sum().reset_index()
 net_sales_by_location = df.groupby('location')['net_sales'].sum().reset_index()
 top_25_menu_items = df.groupby('menu_item')['net_sales'].sum().reset_index().sort_values(by='net_sales', ascending=False).head(25)
 
-# Define the app layout using Bootstrap components
+# define app layout using dash bootstrap rows / columns / components
 app.layout = dbc.Container([
     dbc.Row([
         dbc.Col(html.H1("Restaurant Sales Dashboard", className="text-center text-primary mb-4"), width=12)
@@ -102,9 +102,9 @@ app.layout = dbc.Container([
     ]),
 ])
 
-# CALLBACKS
+# callbacks and functionality for responsive ui
 
-# Callback to update Total Net Sales based on slicers
+# update total net sales single metric based on slicers
 @app.callback(
     Output('total-net-sales-display', 'children'),
     [Input('region-slicer', 'value'),
@@ -117,11 +117,11 @@ app.layout = dbc.Container([
 def update_total_net_sales(selected_region, selected_location, start_date, end_date, selected_category, selected_menu_item):
     filtered_df = df.copy()
 
-    # Ensure default values on initial load
+    # ensure default values on initial load
     if not start_date or not end_date:
         start_date, end_date = df['date'].min(), df['date'].max()
 
-    # Apply filters to the data
+    # apply filters
     filtered_df = filtered_df[(filtered_df['date'] >= start_date) & (filtered_df['date'] <= end_date)]
 
     if selected_region:
@@ -136,13 +136,15 @@ def update_total_net_sales(selected_region, selected_location, start_date, end_d
     if selected_menu_item:
         filtered_df = filtered_df[filtered_df['menu_item'].isin(selected_menu_item)]
 
+    # make sure not empty
     if filtered_df.empty:
         return "No data available for the selected filters."
 
+    # make metric
     total_sales = filtered_df['net_sales'].sum()
     return f"Total Net Sales: ${total_sales:,.2f}"
 
-# Callback to update Total Net Sales by Category (Bar Chart)
+# update total net sales by category bar chart based on slicers
 @app.callback(
     Output('sales-by-category-bar', 'figure'),
     [Input('region-slicer', 'value'),
@@ -155,11 +157,11 @@ def update_total_net_sales(selected_region, selected_location, start_date, end_d
 def update_sales_by_category(selected_region, selected_location, start_date, end_date, selected_category, selected_menu_item):
     filtered_df = df.copy()
 
-    # Ensure default values on initial load
+    # ensure default values on initial load
     if not start_date or not end_date:
         start_date, end_date = df['date'].min(), df['date'].max()
 
-    # Apply filters to the data
+    # apply filters
     filtered_df = filtered_df[(filtered_df['date'] >= start_date) & (filtered_df['date'] <= end_date)]
 
     if selected_region:
@@ -174,12 +176,14 @@ def update_sales_by_category(selected_region, selected_location, start_date, end
     if selected_menu_item:
         filtered_df = filtered_df[filtered_df['menu_item'].isin(selected_menu_item)]
 
+    # make sure not empty
     if filtered_df.empty:
         return px.bar(title="No Data Available")
 
-    # Create the bar chart
+    # group by category and sum net sales
     sales_by_category = filtered_df.groupby('category')['net_sales'].sum().reset_index()
 
+    # make chart
     fig = px.bar(
         sales_by_category,
         x='category',
@@ -188,7 +192,7 @@ def update_sales_by_category(selected_region, selected_location, start_date, end
     )
     return fig
 
-# Callback for Total Sales per Region by Net Sales (Bar Chart)
+# update total net sales per region bar chart based on slicers
 @app.callback(
     Output('sales-by-region-bar', 'figure'),
     [Input('region-slicer', 'value'),
@@ -200,11 +204,11 @@ def update_sales_by_category(selected_region, selected_location, start_date, end
 def update_sales_by_region(selected_region, selected_location, start_date, end_date, selected_menu_item):
     filtered_df = df.copy()
 
-    # Ensure default values on initial load
+    # ensure default values on initial load
     if not start_date or not end_date:
         start_date, end_date = df['date'].min(), df['date'].max()
 
-    # Apply filters to the data
+    # apply filters
     filtered_df = filtered_df[(filtered_df['date'] >= start_date) & (filtered_df['date'] <= end_date)]
 
     if selected_region:
@@ -216,13 +220,14 @@ def update_sales_by_region(selected_region, selected_location, start_date, end_d
     if selected_menu_item:
         filtered_df = filtered_df[filtered_df['menu_item'].isin(selected_menu_item)]
 
+    # make sure not empty
     if filtered_df.empty:
         return px.bar(title="No Data Available")
     
-    # Group by region and sum net sales
+    # group by region and sum net sales
     sales_by_region = filtered_df.groupby('region')['net_sales'].sum().reset_index()
 
-    # Create the bar chart
+    # create the chart
     fig = px.bar(
         sales_by_region,
         x='region',
@@ -235,7 +240,7 @@ def update_sales_by_region(selected_region, selected_location, start_date, end_d
 
     return fig
 
-# Callback for Top 25 Menu Items org-wide by Total Net Sales
+# update top 25 menu items bar chart based on slicers
 @app.callback(
     Output('net-sales-by-item-bar-top-25', 'figure'),
     [Input('region-slicer', 'value'),
@@ -246,11 +251,11 @@ def update_sales_by_region(selected_region, selected_location, start_date, end_d
 def update_top_25_menu_items(selected_region, selected_location, start_date, end_date):
     filtered_df = df.copy()
 
-    # Ensure default values on initial load
+    # ensure default values on initial load
     if not start_date or not end_date:
         start_date, end_date = df['date'].min(), df['date'].max()
 
-    # Apply filters to the data
+    # apply filters
     filtered_df = filtered_df[(filtered_df['date'] >= start_date) & (filtered_df['date'] <= end_date)]
 
     if selected_region:
@@ -262,10 +267,10 @@ def update_top_25_menu_items(selected_region, selected_location, start_date, end
     if filtered_df.empty:
         return px.bar(title="No Data Available")
     
-    # Group by menu item and sum net sales
+    # group by menu item and sum net sales
     top_25_items = filtered_df.groupby('menu_item')['net_sales'].sum().reset_index().sort_values(by='net_sales', ascending=False).head(25)
 
-    # Create the bar chart
+    # make the bar chart
     fig = px.bar(
         top_25_items,
         x='menu_item',
@@ -278,7 +283,7 @@ def update_top_25_menu_items(selected_region, selected_location, start_date, end
 
     return fig
 
-# Callback for Total Net Sales by Location (Bar Chart)
+# update total net sales by location bar chart based on slicers
 @app.callback(
     Output('sales-by-location-bar', 'figure'),
     [Input('region-slicer', 'value'),
@@ -290,11 +295,11 @@ def update_top_25_menu_items(selected_region, selected_location, start_date, end
 def update_sales_by_location(selected_region, selected_location, start_date, end_date, selected_menu_item):
     filtered_df = df.copy()
 
-    # Ensure default values on initial load
+    # ensure default values on initial load
     if not start_date or not end_date:
         start_date, end_date = df['date'].min(), df['date'].max()
 
-    # Apply filters to the data
+    # apply filters
     filtered_df = filtered_df[(filtered_df['date'] >= start_date) & (filtered_df['date'] <= end_date)]
 
     if selected_region:
@@ -306,13 +311,14 @@ def update_sales_by_location(selected_region, selected_location, start_date, end
     if selected_menu_item:
         filtered_df = filtered_df[filtered_df['menu_item'].isin(selected_menu_item)]
 
+    # make sure not empty
     if filtered_df.empty:
         return px.bar(title="No Data Available")
 
-    # Group by location and sum net sales
+    # group by location and sum net sales
     sales_by_location = filtered_df.groupby('location')['net_sales'].sum().reset_index()
 
-    # Create the bar chart
+    # make the bar chart
     fig = px.bar(
         sales_by_location,
         x='location',
@@ -325,9 +331,10 @@ def update_sales_by_location(selected_region, selected_location, start_date, end
 
     return fig
 
-# Run the app
+# run app
 if __name__ == '__main__':
     # app.run_server(host='0.0.0.0', port=8050, debug=True)
     # app.run_server(debug=True, host="0.0.0.0", port=8050)
+    # dynamic port binding for render with default 8050 if not specified
     port = int(os.environ.get("PORT", 8050))
     app.run_server(host='0.0.0.0', port=port)
