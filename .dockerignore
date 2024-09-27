@@ -1,15 +1,31 @@
+# Exclude virtual environments
 restaurant_data_simulators_venv/
+venv/
+
+# Exclude archived and generated data
+data_pipeline/generated_data/
 _archive/
+generated_data/
+
+# Exclude unnecessary app files
 _notes/
 _notes.txt
-generated_data/
-venv/
+requirements_checks/
+data_pipeline/
+
+# Exclude Python cache files
 __pycache__/
 *.pyc
+
+# Exclude migrations and database
 */migrations/*
 db.sqlite3
+
+# Exclude environment files and static assets
 .env
 staticfiles/
+
+# Exclude Git-related files and node modules
 .git
 .gitignore
 node_modules/
