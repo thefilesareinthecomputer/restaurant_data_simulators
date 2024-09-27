@@ -16,7 +16,6 @@ Current features include:
 - Plotly
 - Pyarrow
 - Dash
-- Flask
 
 ## Features
 - Interactive dashboard for visualizing sales data
