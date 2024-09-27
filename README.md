@@ -100,8 +100,8 @@ memory usage: 378.1+ MB
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/thefilesareinthecomputer/restaurant_data_simulators.git
-cd restaurant_data_simulators
+git clone https://github.com/thefilesareinthecomputer/restaurant_sales_dashboard.git
+cd restaurant_sales_dashboard
 ```
 ### 2. Set up a virtual environment
 ```bash
@@ -115,14 +115,14 @@ source {VENV_NAME}/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Set up environment variables
+### 4. Set up environment variables (optional)
 - Create a .env file in the root of your project and define the following:
 ```bash
 STAGING_DATA_DIRECTORY=/path/to/staging/data
 APP_DATA_DIRECTORY=/path/to/app/data
 ```
 
-### 5. Run the data pipeline (optional)
+### 5. Run the data pipeline (optional) (sample parquet file already included in the repo)
 - If you want to edit the menu or locations lists, you can do so in the `data_pipeline/restaurant_details.py` file
 - Then, to generate new synthetic data, run the following:
 ```bash
